@@ -1,0 +1,378 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(248, 246, 250);
+}
+
+.show {
+  /* animation: hideTodo 1s forwards; */
+  /* visibility: hidden; */
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.4s;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.4s;
+}
+
+.scale-up {
+  transform: scale(1);
+  transition: all 0.4s;
+}
+
+.scale-down {
+  transform: scale(0.9);
+  transition: all 0.4s;
+}
+
+/* TODO LIST, ADD TASK BUTTON, LIST */
+
+.todo {
+  /* margin: auto;
+  margin-top: 2em;
+   max-width: 1400px;
+  height: 100%; 
+  width: 100%;
+  left: 20%;
+  text-align: center;
+  z-index: 1;
+  position: absolute; */
+  margin: 0 auto;
+  margin-top: 2em;
+  width: 100%;
+  max-width: 800px;
+  /* text-align: center; */
+}
+
+.todo h1 {
+  font-size: 2.5em;
+  color: rgb(129, 129, 129);
+  font-weight: 700;
+  text-align: center;
+}
+
+.todo-task {
+  /* margin: auto; */
+  display: flex;
+  justify-content: space-between;
+  /* width: 60%; */
+}
+
+.todo-task button {
+  font-size: 15px;
+  padding: 0.6em 1.5em;
+  border-radius: 5px;
+  border: 0;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(100, 125, 237);
+}
+
+#task-list {
+  font-size: 15px;
+  padding: 0.6em 1.5em 0.6em 0.2em;
+  border: 0;
+  border-radius: 5px;
+}
+
+.todo-list {
+  /* margin: auto; */
+  margin-top: 1em;
+  padding: 1.7em 1em;
+  background-color: rgba(221, 217, 231, 0.452);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.todo-list span {
+  padding: 10px 15px;
+  margin-bottom: 0;
+  border-radius: 5px;
+  background-color: rgba(194, 193, 193, 0.575);
+  color: rgb(112, 112, 112);
+  
+}
+
+.todo-list form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+  justify-content: space-between;
+  padding: 0.5em 0.5em;
+  text-align: left;
+  background-color: rgba(255, 255, 255, 0.671);
+  border-radius: 5px;
+  /* animation: addTodo 0.7s forwards; */
+}
+
+.todo-list form:last-of-type {
+  margin-bottom: 0;
+}
+
+/* .todo-list .no-margin {
+  margin-bottom: 0;
+} */
+
+.todo-list form label {
+  font-size: 1em;
+  font-weight: 300;
+  padding-left: 0.5em;
+  margin-bottom: 0;
+}
+
+.button-label {
+  display: flex;
+}
+
+.todo-list form button {
+  width: 20px;
+  padding: 1em;
+  height: 20px;
+  margin-left: 0.5em;
+  border: 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(236, 236, 236);
+  transition: background-color 0.5s;
+  
+}
+
+.todo-list form button:hover {
+  background-color: rgb(207, 206, 206);
+}
+
+.todo-list .fas {
+  font-size: 15px;
+  color: rgb(114, 114, 114);
+}
+
+/* HIDE TODO, CREATE A TITLE, CREATE A STATUS */
+
+.hide-todo { 
+  margin: auto;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  background-color: rgba(12, 12, 12, 0.137);
+  z-index: 2;
+}
+
+.hide-content {
+  position: absolute; 
+   top: 50%;
+   left: 50%; 
+   transform: translate(-50%, -50%);
+   max-width: 32rem;
+   width: 100%;
+}
+
+.bars {
+  text-align: end;
+  
+}
+
+.bars .bar {
+  padding: 0 0.4em;
+  margin-bottom: 0.5em;
+  font-size: 24px;
+  color: gray;
+  border: 0;
+  border-radius: 3px;
+  background-color: rgb(241, 241, 241);
+  transition: all 500ms;
+  cursor: pointer;
+}
+
+.bar:hover {
+  background-color: rgb(252, 77, 77);
+  color: #fff;
+}
+
+.add-content {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 1rem 1.5rem;
+  background-color: rgb(243, 239, 245);
+  color: rgb(154, 142, 163);
+  border-radius: 5px;
+  
+}
+
+.block {
+  display: block;
+}
+
+/* form {
+  width: 100%;
+  position: relative;
+} */
+
+.form {
+  width: 100%;
+  position: relative; 
+  margin-top: 1em;
+}
+
+#title, #status {
+  width: 100%;
+  margin-top: 0.5em;
+  box-sizing: border-box;
+  padding: 0.8em 0;
+  border: 0;
+}
+
+/* label {
+  margin-bottom: 1em;
+} */
+
+#title-form {
+  margin-bottom: 1em;
+}
+
+#status {
+  background-color: white;
+  font-size: 15px;
+}
+
+#submit-cancel {
+  margin-top: 2em;
+}
+
+#submit-cancel input {
+  font-size: 17px;
+  font-weight: 500;
+  padding: 0.6em 1em;
+  border-radius: 5px;
+  border: 0;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+#submit {
+  color: white;
+  background-color: rgb(100, 125, 237);
+}
+
+#cancel {
+  margin-left: 0.5em;
+  color: rgb(124, 124, 124);
+  background-color: rgb(202, 201, 201);
+}
+
+/* UPDATE TITLE, UPDATE STATUS */
+
+.update-todo { 
+  margin: auto;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  background-color: rgba(12, 12, 12, 0.137);
+  z-index: 2;
+}
+
+.update-content {
+   position: absolute; 
+   top: 50%;
+   left: 50%; 
+   transform: translate(-50%, -50%);
+   max-width: 32rem;
+   width: 100%;
+}
+
+.add-update-content {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 1rem 1.5rem;
+  background-color: rgb(243, 239, 245);
+  color: rgb(154, 142, 163);
+  border-radius: 5px; 
+}
+
+#update-title-form {
+  margin-bottom: 1em;
+}
+
+#update-status {
+  background-color: white;
+  font-size: 15px;
+}
+
+#update-title, #update-status {
+  width: 100%;
+  margin-top: 0.5em;
+  box-sizing: border-box;
+  padding: 0.8em 0;
+  border: 0;
+}
+
+#update-submit-cancel {
+  margin-top: 2em;
+}
+
+#update-submit-cancel input {
+  font-size: 17px;
+  font-weight: 500;
+  padding: 0.6em 1em;
+  border-radius: 5px;
+  border: 0;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+#update-submit {
+  color: white;
+  background-color: rgb(100, 125, 237);
+}
+
+#update-cancel {
+  margin-left: 0.5em;
+  color: rgb(124, 124, 124);
+  background-color: rgb(202, 201, 201);
+}
+
+
+@keyframes hideTodo {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes showTodo {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+    visibility: hidden;
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+  }
+}
+
+
+
+
+
+
+
