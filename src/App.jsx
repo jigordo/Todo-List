@@ -1,50 +1,61 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import reactLogo from './assets/react.svg'
-import Main from './mainTwo'
+import { motion, AnimatePresence } from "framer-motion"
+import Todo from './todoList'
 import { v4 as uuidv4 } from 'uuid';
 
 // import './App.css'
-function App() {
+function App(props) {
   
   const [title, setTitle] = useState('');
   const [status, setStatus] = useState('incomplete');
   const [state,setState] = useState([]);
+  const [isShown, setIsShown] = useState(false)
 
+ 
   
+  let textName = 
+  {
+    name: title,
+    id: uuidv4(),
+    status: status
+  }
+
+  const div = {
+    hidden: {scale: 0, x: '-50%', y: '-50%'},
+    visible: {scale: [0.6,1], x: '-50%', y: '-50%',
+      transition: {duration: 0.2}},
+    exit: {scale: [1,0.6], x: '-50%', y: '-50%',
+      transition: {duration: 0.15, ease: 'linear'}}
+  }
+
   
   const onClick = (e) => {
     const hideTodo = document.querySelector('.hide-todo')
-    const addContent = document.querySelector('.add-content')
-
     hideTodo.classList.add('hide')
     hideTodo.classList.remove('show')
-    addContent.classList.add('scale-down')
-    addContent.classList.remove('scale-up') 
     
+    setIsShown(!isShown)
     setTitle("")
     setStatus("incomplete")
   }
 
   const clickButton = (e) => {
     const hideTodo = document.querySelector('.hide-todo');
-    const addContent = document.querySelector('.add-content');
 
     if(e.target.form[0].value !== '') {
       hideTodo.classList.add('hide');
-      hideTodo.classList.remove('show');
-      addContent.classList.add('scale-down');
-      addContent.classList.remove('scale-up');
-    }
+      hideTodo.classList.remove('show');  
+    } 
   }
 
   const clickCancel = (e) => {
     const hideTodo = document.querySelector('.hide-todo')
-    const addContent = document.querySelector('.add-content')
 
     hideTodo.classList.add('hide')
     hideTodo.classList.remove('show')
-    addContent.classList.add('scale-down')
-    addContent.classList.remove('scale-up')
+    
+    setIsShown(!isShown)
     setTitle("")
     setStatus("incomplete")
   }
@@ -55,38 +66,23 @@ function App() {
     ) 
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e)=> {
     e.preventDefault();
+    const formSpan = document.querySelector('.todo-list span') 
+    formSpan.style.display = 'none';
 
-    const body = title
-    const formSpan = document.querySelector('.todo-list span')
-    const name = document.querySelector("#name")
-
-    const textName = {
-      name: body,
-      id: uuidv4(),
-      status: status,
-      checked: false
-    }
-
-    formSpan.style.display = 'none'
-
-      setState (
-        [textName, ...state]
-      ) 
+    setState ( 
+      [textName, 
+        ...state]
+    ) 
 
       setTitle("") 
       setStatus("incomplete")
+      setIsShown(!isShown)   
+    
+  })
 
-      if (textName.status === 'complete') {
-        textName.checked = true
-      } else {
-        textName.checked = false
-      } 
-
-      // console.log(e.target)
-      
-  }
+ 
 
   const handleChange = (e) => {
    setStatus(e.target.value)
@@ -94,44 +90,68 @@ function App() {
 
   return (
     <>
-    <Main list={state} setList={setState} setStatus={setStatus}/>
-     
-      <div className='hide-todo hide'>
-        
-        <div className='hide-content '>
+      <Todo list={state} setList={setState} setStatus={setStatus} isShown={isShown} setIsShown={setIsShown}/>
+      
+      
+        <div
+        className ='hide-todo hide'
+          // hide
+        ><AnimatePresence>
+          { isShown &&
           
-            <div onClick={onClick} className='bars'>
-              <button className='bar'>X</button>
-            </div>
+          <motion.div 
+            variants  = {div}
+            initial   = 'hidden'
+            animate   = 'visible'
+            exit      = 'exit'
+            // transition={{duration: 0.2}}
+            className='hide-content'>
+            
+              <div onClick={onClick} className='bars'>
+                <button className='bar'>X</button>
+              </div>
+            
+              <div className= 'add-content'>
+                <h4>Add TODO</h4>
+
+                <form onSubmit={handleSubmit} id='form'>
+                  <div className='form'>
+                    <div id='title-form'>
+                      <label htmlFor="title">Title</label>
+                      <input 
+                      onChange={(e) => setTitle(e.target.value)}
+                      type="text" name="title" id="title" className='block' 
+                      
+                      value = {title}
+                      required/>
+                    </div>
+
+                    <div id='status-form'>
+                      <label htmlFor="status">Status</label>
+                      <select 
+                        onChange = {handleChange} 
+                        value={status} 
+                        name="status" id="status" className='block label'>
+                        <option     value="incomplete">Incomplete</option>
+                        <option     value="complete">Complete</option>
+                      </select>
+                    </div>
+
+                    <div id='submit-cancel'>
+                      <input 
+                      onClick={clickButton} 
+                      type="submit" value="Add Task" id='submit'/>
+                      <input onClick={clickCancel} type="button" value="Cancel"   id='cancel'/>
+                    </div>
+                  </div>
+                </form>
+              </div>
+          </motion.div>
           
-            <div className='add-content scale-down'>
-              <h4>Add TODO</h4>
-
-              <form onSubmit={handleSubmit} id='form'>
-                <div className='form'>
-                  <div id='title-form'>
-                    <label htmlFor="title">Title</label>
-                    <input onChange={(e) => setTitle(e.target.value)}
-                    type="text" name="title" id="title" className='block' value={title} required/>
-                  </div>
-
-                  <div id='status-form'>
-                    <label htmlFor="status">Status</label>
-                    <select onChange = {handleChange} value={status} name="status" id="status" className='block label'>
-                      <option value="incomplete">Incomplete</option>
-                      <option value="complete">Complete</option>
-                    </select>
-                  </div>
-
-                  <div id='submit-cancel'>
-                    <input onClick={clickButton} type="submit" value="Add Task" id='submit'/>
-                    <input onClick={clickCancel} type="button" value="Cancel"   id='cancel'/>
-                  </div>
-                </div>
-              </form>
-            </div>
-        </div>
-      </div> 
+          }
+          </AnimatePresence>
+        </div> 
+      
     </>
   )
 
